@@ -6,8 +6,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.jackson.JacksonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 import win.techflowing.Config;
 
 import javax.net.ssl.*;
@@ -68,9 +66,9 @@ public class RestClient {
                     public Response intercept(Chain chain) throws IOException {
                         Request request = chain.request().newBuilder()
                                 .header("user-agent", Config.USER_AGENT)
-                                .header("referer", "https://leetcode-cn.com/problemset/algorithms/")
-                                .header("cookie","_uab_collina=153095290132036588613107; gr_user_id=d57e64cf-6185-47e9-b93d-11d72d675775; Hm_lvt_fa218a3ff7179639febdb15e372f411c=1530953282,1532090915,1532090936,1532154490; csrftoken=Wd8t6BOhCU2EtDLSX8pQDXBXrY1AX3j5ZSVdPQJMVwUC0CYdDU7xxgrdYU0NudBj; gr_session_id_a2873925c34ecbd2=b1bc13e0-c686-4e72-99f2-1dfb69c4f5f2; gr_session_id_a2873925c34ecbd2_b1bc13e0-c686-4e72-99f2-1dfb69c4f5f2=true; Hm_lpvt_fa218a3ff7179639febdb15e372f411c=1532178983")
-                                .header("x-csrftoken", "Wd8t6BOhCU2EtDLSX8pQDXBXrY1AX3j5ZSVdPQJMVwUC0CYdDU7xxgrdYU0NudBj")
+                                .header("referer", Config.REFERER)
+                                .header("cookie", Config.COOKIE)
+                                .header("x-csrftoken", Config.X_CSRF_TOKEN)
                                 .build();
                         return chain.proceed(request);
                     }

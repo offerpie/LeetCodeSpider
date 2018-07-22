@@ -1,0 +1,647 @@
+{
+    "data": {
+        "isCurrentUserAuthenticated": false,
+        "question": {
+            "questionId": "894",
+            "questionFrontendId": "710",
+            "questionTitle": "Random Pick with Blacklist",
+            "translatedTitle": null,
+            "questionTitleSlug": "random-pick-with-blacklist",
+            "content": "<p>Given a blacklist&nbsp;<code>B</code> containing unique integers&nbsp;from <code>[0, N)</code>, write a function to return a uniform random integer from <code>[0, N)</code> which is <strong>NOT</strong>&nbsp;in <code>B</code>.</p>\r\n\r\n<p>Optimize it such that it minimizes the call to system&rsquo;s <code>Math.random()</code>.</p>\r\n\r\n<p><strong>Note:</strong></p>\r\n\r\n<ol>\r\n\t<li><code>1 &lt;= N &lt;= 1000000000</code></li>\r\n\t<li><code>0 &lt;= B.length &lt; min(100000, N)</code></li>\r\n\t<li><code>[0, N)</code>&nbsp;does NOT include N. See <a href=\"https://en.wikipedia.org/wiki/Interval_(mathematics)\" target=\"_blank\">interval notation</a>.</li>\r\n</ol>\r\n\r\n<p><strong>Example 1:</strong></p>\r\n\r\n<pre>\r\n<strong>Input: \r\n</strong><span id=\"example-input-1-1\">[&quot;Solution&quot;,&quot;pick&quot;,&quot;pick&quot;,&quot;pick&quot;]\r\n</span><span id=\"example-input-1-2\">[[1,[]],[],[],[]]</span>\r\n<strong>Output: </strong><span id=\"example-output-1\">[null,0,0,0]</span>\r\n</pre>\r\n\r\n<p><strong>Example 2:</strong></p>\r\n\r\n<pre>\r\n<strong>Input: \r\n</strong><span id=\"example-input-2-1\">[&quot;Solution&quot;,&quot;pick&quot;,&quot;pick&quot;,&quot;pick&quot;]\r\n</span><span id=\"example-input-2-2\">[[2,[]],[],[],[]]</span>\r\n<strong>Output: </strong><span id=\"example-output-2\">[null,1,1,1]</span>\r\n</pre>\r\n\r\n<p><strong>Example 3:</strong></p>\r\n\r\n<pre>\r\n<strong>Input: \r\n</strong><span id=\"example-input-3-1\">[&quot;Solution&quot;,&quot;pick&quot;,&quot;pick&quot;,&quot;pick&quot;]\r\n</span><span id=\"example-input-3-2\">[[3,[1]],[],[],[]]</span>\r\n<strong>Output: </strong><span id=\"example-output-3\">[null,0,0,2]</span>\r\n</pre>\r\n\r\n<p><strong>Example 4:</strong></p>\r\n\r\n<pre>\r\n<strong>Input: \r\n</strong><span id=\"example-input-4-1\">[&quot;Solution&quot;,&quot;pick&quot;,&quot;pick&quot;,&quot;pick&quot;]\r\n</span><span id=\"example-input-4-2\">[[4,[2]],[],[],[]]</span>\r\n<strong>Output: </strong><span id=\"example-output-4\">[null,1,3,1]</span>\r\n</pre>\r\n\r\n<p><strong>Explanation of Input Syntax:</strong></p>\r\n\r\n<p>The input is two lists:&nbsp;the subroutines called&nbsp;and their&nbsp;arguments.&nbsp;<code>Solution</code>&#39;s&nbsp;constructor has two arguments,&nbsp;<code>N</code> and the blacklist <code>B</code>. <code>pick</code> has no arguments.&nbsp;Arguments&nbsp;are&nbsp;always wrapped with a list, even if there aren&#39;t any.</p>\r\n",
+            "translatedContent": null,
+            "difficulty": "Hard",
+            "stats": "{\"totalAccepted\": \"18\", \"totalSubmission\": \"90\", \"totalAcceptedRaw\": 18, \"totalSubmissionRaw\": 90, \"acRate\": \"20.0%\"}",
+            "allowDiscuss": false,
+            "contributors": "[]",
+            "similarQuestions": "[{\"title\": \"Random Pick Index\", \"titleSlug\": \"random-pick-index\", \"difficulty\": \"Medium\", \"translatedTitle\": \"\\u968f\\u673a\\u6570\\u7d22\\u5f15\"}]",
+            "mysqlSchemas": [
+                
+            ],
+            "randomQuestionUrl": "/problems/random-one-question/",
+            "sessionId": "0",
+            "categoryTitle": "Algorithms",
+            "submitUrl": "/problems/random-pick-with-blacklist/submit/",
+            "interpretUrl": "/problems/random-pick-with-blacklist/interpret_solution/",
+            "codeDefinition": "[{\"value\": \"cpp\", \"text\": \"C++\", \"defaultCode\": \"class Solution {\\r\\npublic:\\r\\n    Solution(int N, vector<int> blacklist) {\\r\\n        \\r\\n    }\\r\\n    \\r\\n    int pick() {\\r\\n        \\r\\n    }\\r\\n};\\r\\n\\r\\n/**\\r\\n * Your Solution object will be instantiated and called as such:\\r\\n * Solution obj = new Solution(N, blacklist);\\r\\n * int param_1 = obj.pick();\\r\\n */\"}, {\"value\": \"java\", \"text\": \"Java\", \"defaultCode\": \"class Solution {\\r\\n\\r\\n    public Solution(int N, int[] blacklist) {\\r\\n        \\r\\n    }\\r\\n    \\r\\n    public int pick() {\\r\\n        \\r\\n    }\\r\\n}\\r\\n\\r\\n/**\\r\\n * Your Solution object will be instantiated and called as such:\\r\\n * Solution obj = new Solution(N, blacklist);\\r\\n * int param_1 = obj.pick();\\r\\n */\"}, {\"value\": \"python\", \"text\": \"Python\", \"defaultCode\": \"class Solution(object):\\r\\n\\r\\n    def __init__(self, N, blacklist):\\r\\n        \\\"\\\"\\\"\\r\\n        :type N: int\\r\\n        :type blacklist: List[int]\\r\\n        \\\"\\\"\\\"\\r\\n        \\r\\n\\r\\n    def pick(self):\\r\\n        \\\"\\\"\\\"\\r\\n        :rtype: int\\r\\n        \\\"\\\"\\\"\\r\\n        \\r\\n\\r\\n\\r\\n# Your Solution object will be instantiated and called as such:\\r\\n# obj = Solution(N, blacklist)\\r\\n# param_1 = obj.pick()\"}, {\"value\": \"python3\", \"text\": \"Python3\", \"defaultCode\": \"class Solution:\\r\\n\\r\\n    def __init__(self, N, blacklist):\\r\\n        \\\"\\\"\\\"\\r\\n        :type N: int\\r\\n        :type blacklist: List[int]\\r\\n        \\\"\\\"\\\"\\r\\n        \\r\\n\\r\\n    def pick(self):\\r\\n        \\\"\\\"\\\"\\r\\n        :rtype: int\\r\\n        \\\"\\\"\\\"\\r\\n        \\r\\n\\r\\n\\r\\n# Your Solution object will be instantiated and called as such:\\r\\n# obj = Solution(N, blacklist)\\r\\n# param_1 = obj.pick()\"}, {\"value\": \"c\", \"text\": \"C\", \"defaultCode\": \"typedef struct {\\r\\n    \\r\\n} Solution;\\r\\n\\r\\nSolution* solutionCreate(int N, int* blacklist, int blacklistSize) {\\r\\n    \\r\\n}\\r\\n\\r\\nint solutionPick(Solution* obj) {\\r\\n    \\r\\n}\\r\\n\\r\\nvoid solutionFree(Solution* obj) {\\r\\n    \\r\\n}\\r\\n\\r\\n/**\\r\\n * Your Solution struct will be instantiated and called as such:\\r\\n * struct Solution* obj = solutionCreate(N, blacklist, blacklistSize);\\r\\n * int param_1 = solutionPick(obj);\\r\\n * solutionFree(obj);\\r\\n */\"}, {\"value\": \"csharp\", \"text\": \"C#\", \"defaultCode\": \"public class Solution {\\r\\n\\r\\n    public Solution(int N, int[] blacklist) {\\r\\n        \\r\\n    }\\r\\n    \\r\\n    public int Pick() {\\r\\n        \\r\\n    }\\r\\n}\\r\\n\\r\\n/**\\r\\n * Your Solution object will be instantiated and called as such:\\r\\n * Solution obj = new Solution(N, blacklist);\\r\\n * int param_1 = obj.Pick();\\r\\n */\"}, {\"value\": \"javascript\", \"text\": \"JavaScript\", \"defaultCode\": \"/**\\r\\n * @param {number} N\\r\\n * @param {number[]} blacklist\\r\\n */\\r\\nvar Solution = function(N, blacklist) {\\r\\n    \\r\\n};\\r\\n\\r\\n/**\\r\\n * @return {number}\\r\\n */\\r\\nSolution.prototype.pick = function() {\\r\\n    \\r\\n};\\r\\n\\r\\n/** \\r\\n * Your Solution object will be instantiated and called as such:\\r\\n * var obj = Object.create(Solution).createNew(N, blacklist)\\r\\n * var param_1 = obj.pick()\\r\\n */\"}, {\"value\": \"ruby\", \"text\": \"Ruby\", \"defaultCode\": \"class Solution\\r\\n\\r\\n=begin\\r\\n    :type n: Integer\\r\\n    :type blacklist: Integer[]\\r\\n=end\\r\\n    def initialize(n, blacklist)\\r\\n        \\r\\n    end\\r\\n\\r\\n\\r\\n=begin\\r\\n    :rtype: Integer\\r\\n=end\\r\\n    def pick()\\r\\n        \\r\\n    end\\r\\n\\r\\n\\r\\nend\\r\\n\\r\\n# Your Solution object will be instantiated and called as such:\\r\\n# obj = Solution.new(n, blacklist)\\r\\n# param_1 = obj.pick()\"}, {\"value\": \"golang\", \"text\": \"Go\", \"defaultCode\": \"type Solution struct {\\r\\n    \\r\\n}\\r\\n\\r\\n\\r\\nfunc Constructor(N int, blacklist []int) Solution {\\r\\n    \\r\\n}\\r\\n\\r\\n\\r\\nfunc (this *Solution) Pick() int {\\r\\n    \\r\\n}\\r\\n\\r\\n\\r\\n/**\\r\\n * Your Solution object will be instantiated and called as such:\\r\\n * obj := Constructor(N, blacklist);\\r\\n * param_1 := obj.Pick();\\r\\n */\"}, {\"value\": \"scala\", \"text\": \"Scala\", \"defaultCode\": \"class Solution(_N: Int, _blacklist: Array[Int]) {\\r\\n\\r\\n    def pick(): Int = {\\r\\n        \\r\\n    }\\r\\n\\r\\n}\\r\\n\\r\\n/**\\r\\n * Your Solution object will be instantiated and called as such:\\r\\n * var obj = new Solution(N, blacklist)\\r\\n * var param_1 = obj.pick()\\r\\n */\"}, {\"value\": \"kotlin\", \"text\": \"Kotlin\", \"defaultCode\": \"class Solution(N: Int, blacklist: IntArray) {\\r\\n\\r\\n    fun pick(): Int {\\r\\n        \\r\\n    }\\r\\n\\r\\n}\\r\\n\\r\\n/**\\r\\n * Your Solution object will be instantiated and called as such:\\r\\n * var obj = Solution(N, blacklist)\\r\\n * var param_1 = obj.pick()\\r\\n */\"}]",
+            "sampleTestCase": "[\"Solution\", \"pick\", \"pick\", \"pick\"]\n[[1, []], [], [], []]",
+            "enableTestMode": false,
+            "metaData": "{\r\n    \"classname\": \"Solution\",\r\n    \"maxbytesperline\": 200000,\r\n    \"constructor\": {\r\n        \"params\": [\r\n            {\r\n                \"name\": \"N\",\r\n                \"type\": \"integer\"\r\n            },\r\n            {\r\n                \"name\": \"blacklist\",\r\n                \"type\": \"integer[]\"\r\n            },\r\n            {\r\n                \"type\": \"integer\",\r\n                \"name\": \"blacklistSize\",\r\n                \"lang\": \"c\",\r\n                \"value\": \"size_2\"\r\n            }\r\n        ]\r\n    },\r\n    \"methods\": [\r\n        {\r\n            \"name\" : \"pick\",\r\n            \"params\": [\r\n            ],\r\n            \"return\": {\r\n                \"type\": \"integer\"\r\n            }\r\n        }\r\n    ],\r\n    \"systemdesign\": true,\r\n    \"params\": [\r\n        {\r\n            \"name\": \"inputs\",\r\n            \"type\": \"integer[]\"\r\n        },\r\n        {\r\n            \"name\": \"inputs\",\r\n            \"type\": \"integer[]\"\r\n        }\r\n    ],\r\n    \"return\": {\r\n        \"type\": \"list<String>\",\r\n        \"dealloc\": true\r\n    }\r\n}",
+            "enableRunCode": true,
+            "enableSubmit": true,
+            "judgerAvailable": true,
+            "infoVerified": false,
+            "envInfo": "{\"cpp\": [\"C++\", \"<p>Compiled with <code>g++ 6.3</code> using the latest C++ 14 standard.</p>\\r\\n\\r\\n<p>Your code is compiled with level one optimization (<code>-O1</code>). <a href=\\\"https://github.com/google/sanitizers/wiki/AddressSanitizer\\\" target=\\\"_blank\\\">AddressSanitizer</a> is also enabled to help detect out-of-bounds and use-after-free bugs.</p>\\r\\n\\r\\n<p>Most standard library headers are already included automatically for your convenience.</p>\"], \"java\": [\"Java\", \"<p>Compiled with <code>java 1.8.0</code> taking advantage of the latest Java 8 features such as lambda expressions and stream API.</p>\\n\\n<p>Most standard library headers are already included automatically for your convenience.</p>\"], \"python\": [\"Python\", \"<p>Compiled with <code>python 2.7.12</code>.</p>\\n\\n<p>Most libraries are already imported automatically for your convenience, such as <a href=\\\"https://docs.python.org/2/library/array.html\\\" target=\\\"_blank\\\">array</a>, <a href=\\\"https://docs.python.org/2/library/bisect.html\\\" target=\\\"_blank\\\">bisect</a>, <a href=\\\"https://docs.python.org/2/library/collections.html\\\" target=\\\"_blank\\\">collections</a>. If you need more libraries, you can import it yourself.</p>\\n\\n<p>Note that Python 2.7 <a href=\\\"https://www.python.org/dev/peps/pep-0373/\\\" target=\\\"_blank\\\">will not be maintained past 2020</a>. For the latest Python, please choose Python3 instead.</p>\"], \"c\": [\"C\", \"<p>Compiled with <code>gcc 6.3</code> using the gnu99 standard.</p>\\r\\n\\r\\n<p>Your code is compiled with level one optimization (<code>-O1</code>). <a href=\\\"https://github.com/google/sanitizers/wiki/AddressSanitizer\\\" target=\\\"_blank\\\">AddressSanitizer</a> is also enabled to help detect out-of-bounds and use-after-free bugs.</p>\\r\\n\\r\\n<p>Most standard library headers are already included automatically for your convenience.</p>\\r\\n\\r\\n<p>For hash table operations, you may use <a href=\\\"https://troydhanson.github.io/uthash/\\\" target=\\\"_blank\\\">uthash</a>. \\\"uthash.h\\\" is included by default. Below are some examples:</p>\\r\\n\\r\\n<p><b>1. Adding an item to a hash.</b>\\r\\n<pre>\\r\\nstruct hash_entry {\\r\\n    int id;            /* we'll use this field as the key */\\r\\n    char name[10];\\r\\n    UT_hash_handle hh; /* makes this structure hashable */\\r\\n};\\r\\n\\r\\nstruct hash_entry *users = NULL;\\r\\n\\r\\nvoid add_user(struct hash_entry *s) {\\r\\n    HASH_ADD_INT(users, id, s);\\r\\n}\\r\\n</pre>\\r\\n</p>\\r\\n\\r\\n<p><b>2. Looking up an item in a hash:</b>\\r\\n<pre>\\r\\nstruct hash_entry *find_user(int user_id) {\\r\\n    struct hash_entry *s;\\r\\n    HASH_FIND_INT(users, &user_id, s);\\r\\n    return s;\\r\\n}\\r\\n</pre>\\r\\n</p>\\r\\n\\r\\n<p><b>3. Deleting an item in a hash:</b>\\r\\n<pre>\\r\\nvoid delete_user(struct hash_entry *user) {\\r\\n    HASH_DEL(users, user);  \\r\\n}\\r\\n</pre>\\r\\n</p>\"], \"csharp\": [\"C#\", \"<p>Compiled with <code>mono 5.12.0</code> providing <a href=\\\"https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7\\\" target=\\\"_blank\\\">full support for C# 7</a>.</p>\\r\\n\\r\\n<p>Your code is compiled with debug flag enabled (<code>/debug</code>).</p>\"], \"javascript\": [\"JavaScript\", \"<p>Run with <code>nodejs 8.8.1</code>.</p>\\r\\n\\r\\n<p>Your code is run with <code>--harmony</code> flag, enabling <a href=\\\"http://node.green/\\\" target=\\\"_blank\\\">new ES6 features</a>.</p>\\r\\n\\r\\n<p><a href=\\\"http://underscorejs.org/\\\" target=\\\"_blank\\\">underscore.js</a> library is included by default.</p>\"], \"ruby\": [\"Ruby\", \"<p>Run with <code>ruby 2.4.1</code>.</p>\"], \"golang\": [\"Go\", \"<p>Compiled with <code>go 1.10.3</code>.</p>\"], \"python3\": [\"Python3\", \"<p>Run with <code>python 3.5.2</code>.</p>\\n\\n<p>Most libraries are already imported automatically for your convenience, such as <a href=\\\"https://docs.python.org/3/library/array.html\\\" target=\\\"_blank\\\">array</a>, <a href=\\\"https://docs.python.org/3/library/bisect.html\\\" target=\\\"_blank\\\">bisect</a>, <a href=\\\"https://docs.python.org/3/library/collections.html\\\" target=\\\"_blank\\\">collections</a>. If you need more libraries, you can import it yourself.</p>\"], \"scala\": [\"Scala\", \"<p>Compiled with <code>scala 2.11.6</code>.</p>\"], \"kotlin\": [\"Kotlin\", \"<p>Compiled with <code>kotlin 1.2.50</code>.</p>\"]}",
+            "urlManager": "{\"account_login\": \"/accounts/login/\", \"maintenance\": \"/maintenance/\", \"profile\": \"/profile/\"}",
+            "article": "{}",
+            "questionDetailUrl": "/problems/random-pick-with-blacklist/",
+            "libraryUrl": null,
+            "companyTags": null,
+            "companyTagStats": "{}",
+            "topicTags": [
+                {
+                    "name": "Sort",
+                    "slug": "sort",
+                    "translatedName": "\u6392\u5e8f",
+                    "__typename": "TopicTagNode"
+                },
+                {
+                    "name": "Hash Table",
+                    "slug": "hash-table",
+                    "translatedName": "\u54c8\u5e0c\u8868",
+                    "__typename": "TopicTagNode"
+                },
+                {
+                    "name": "Binary Search",
+                    "slug": "binary-search",
+                    "translatedName": "\u4e8c\u5206\u67e5\u627e",
+                    "__typename": "TopicTagNode"
+                },
+                {
+                    "name": "Random",
+                    "slug": "random",
+                    "translatedName": null,
+                    "__typename": "TopicTagNode"
+                }
+            ],
+            "__typename": "QuestionNode"
+        },
+        "interviewed": {
+            "interviewedUrl": "/problems/api/interviewed/",
+            "companies": [
+                {
+                    "id": 552,
+                    "name": "Adobe",
+                    "slug": "adobe",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 480,
+                    "name": "Aetion",
+                    "slug": "aetion",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 522,
+                    "name": "Affirm",
+                    "slug": "affirm",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 549,
+                    "name": "Airbnb",
+                    "slug": "airbnb",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 510,
+                    "name": "Akuna Capital",
+                    "slug": "akuna-capital",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 497,
+                    "name": "Alibaba",
+                    "slug": "alibaba",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 544,
+                    "name": "Amazon",
+                    "slug": "amazon",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 473,
+                    "name": "AppDynamics",
+                    "slug": "appdynamics",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 548,
+                    "name": "Apple",
+                    "slug": "apple",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 458,
+                    "name": "Baidu",
+                    "slug": "baidu",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 545,
+                    "name": "Bloomberg",
+                    "slug": "bloomberg",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 519,
+                    "name": "Citadel",
+                    "slug": "citadel",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 493,
+                    "name": "Cloudera",
+                    "slug": "cloudera",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 454,
+                    "name": "Coupang",
+                    "slug": "coupang",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 488,
+                    "name": "Coursera",
+                    "slug": "coursera",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 511,
+                    "name": "databricks",
+                    "slug": "databricks",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 485,
+                    "name": "DoorDash",
+                    "slug": "doordash",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 523,
+                    "name": "Drawbridge",
+                    "slug": "drawbridge",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 553,
+                    "name": "Dropbox",
+                    "slug": "dropbox",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 482,
+                    "name": "eBay",
+                    "slug": "ebay",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 471,
+                    "name": "Epic Systems",
+                    "slug": "epic-systems",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 483,
+                    "name": "Expedia",
+                    "slug": "expedia",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 542,
+                    "name": "Facebook",
+                    "slug": "facebook",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 495,
+                    "name": "Fallible",
+                    "slug": "fallible",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 52738,
+                    "name": "ForUsAll",
+                    "slug": "forusall",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 52665,
+                    "name": "Garena",
+                    "slug": "garena",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 513,
+                    "name": "GE Digital",
+                    "slug": "ge-digital",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 500,
+                    "name": "Gilt Groupe",
+                    "slug": "gilt-groupe",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 481,
+                    "name": "GoDaddy",
+                    "slug": "godaddy",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 512,
+                    "name": "Goldman Sachs",
+                    "slug": "goldman-sachs",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 560,
+                    "name": "Google",
+                    "slug": "google",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 514,
+                    "name": "Helix",
+                    "slug": "helix",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 509,
+                    "name": "Houzz",
+                    "slug": "houzz",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 475,
+                    "name": "Hulu",
+                    "slug": "hulu",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 52941,
+                    "name": "IIT Bombay",
+                    "slug": "iit-bombay",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 487,
+                    "name": "Indeed",
+                    "slug": "indeed",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 524,
+                    "name": "inmobi",
+                    "slug": "inmobi",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 489,
+                    "name": "Intuit",
+                    "slug": "intuit",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 447,
+                    "name": "IXL",
+                    "slug": "ixl",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 486,
+                    "name": "Jingchi",
+                    "slug": "jingchi",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 547,
+                    "name": "LinkedIn",
+                    "slug": "linkedin",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 505,
+                    "name": "LiveRamp",
+                    "slug": "liveramp",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 484,
+                    "name": "Lyft",
+                    "slug": "lyft",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 517,
+                    "name": "Machine Zone",
+                    "slug": "machine-zone",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 490,
+                    "name": "MAQ Software",
+                    "slug": "maq-software",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 479,
+                    "name": "Mathworks",
+                    "slug": "mathworks",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 543,
+                    "name": "Microsoft",
+                    "slug": "microsoft",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 501,
+                    "name": "NetEase",
+                    "slug": "netease",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 507,
+                    "name": "Netsuite",
+                    "slug": "netsuite",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 461,
+                    "name": "Palantir",
+                    "slug": "palantir",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 478,
+                    "name": "Pinterest",
+                    "slug": "pinterest",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 448,
+                    "name": "Pocket Gems",
+                    "slug": "pocket-gems",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 579,
+                    "name": "Pony.ai",
+                    "slug": "ponyai",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 508,
+                    "name": "Poynt",
+                    "slug": "poynt",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 506,
+                    "name": "Pure Storage",
+                    "slug": "pure-storage",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 525,
+                    "name": "Quip",
+                    "slug": "quip",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 518,
+                    "name": "Quora",
+                    "slug": "quora",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 492,
+                    "name": "Rackspace",
+                    "slug": "rackspace",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 521,
+                    "name": "Radius",
+                    "slug": "radius",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 494,
+                    "name": "Riot Games",
+                    "slug": "riot-games",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 52666,
+                    "name": "Roblox",
+                    "slug": "roblox",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 520,
+                    "name": "Rubrik",
+                    "slug": "rubrik",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 502,
+                    "name": "Samsung",
+                    "slug": "samsung",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 449,
+                    "name": "Snapchat",
+                    "slug": "snapchat",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 462,
+                    "name": "Square",
+                    "slug": "square",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 496,
+                    "name": "Tencent",
+                    "slug": "tencent",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 516,
+                    "name": "TripleByte",
+                    "slug": "triplebyte",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 564,
+                    "name": "Twitter",
+                    "slug": "twitter",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 451,
+                    "name": "Two Sigma",
+                    "slug": "two-sigma",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 546,
+                    "name": "Uber",
+                    "slug": "uber",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 498,
+                    "name": "Valve",
+                    "slug": "valve",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 499,
+                    "name": "WAP",
+                    "slug": "wap",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 578,
+                    "name": "Wish",
+                    "slug": "wish",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 565,
+                    "name": "Works Applications",
+                    "slug": "works-applications",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 551,
+                    "name": "Yahoo",
+                    "slug": "yahoo",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 515,
+                    "name": "Yatra",
+                    "slug": "yatra",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 550,
+                    "name": "Yelp",
+                    "slug": "yelp",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 504,
+                    "name": "Zappos",
+                    "slug": "zappos",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 561,
+                    "name": "Zenefits",
+                    "slug": "zenefits",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 568,
+                    "name": "\u4eca\u65e5\u5934\u6761",
+                    "slug": "jin-ri-tou-tiao",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 566,
+                    "name": "\u534e\u4e3a",
+                    "slug": "hua-wei",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 577,
+                    "name": "\u5b57\u8282\u8df3\u52a8",
+                    "slug": "zi-jie-tiao-dong",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 576,
+                    "name": "\u5c0f\u7c73",
+                    "slug": "xiao-mi",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 572,
+                    "name": "\u7231\u5947\u827a",
+                    "slug": "ai-qi-yi",
+                    "__typename": "InterviewCompanyOption"
+                },
+                {
+                    "id": 569,
+                    "name": "\u9752\u725b\u8f6f\u4ef6",
+                    "slug": "qing-niu-ruan-jian",
+                    "__typename": "InterviewCompanyOption"
+                }
+            ],
+            "timeOptions": [
+                {
+                    "id": 0,
+                    "name": "last week",
+                    "__typename": "InterviewTimeOption"
+                },
+                {
+                    "id": 1,
+                    "name": "last month",
+                    "__typename": "InterviewTimeOption"
+                },
+                {
+                    "id": 2,
+                    "name": "last 3 month",
+                    "__typename": "InterviewTimeOption"
+                },
+                {
+                    "id": 3,
+                    "name": "last 6 month",
+                    "__typename": "InterviewTimeOption"
+                },
+                {
+                    "id": 4,
+                    "name": "more than 6 months",
+                    "__typename": "InterviewTimeOption"
+                },
+                {
+                    "id": 5,
+                    "name": "other",
+                    "__typename": "InterviewTimeOption"
+                }
+            ],
+            "stageOptions": [
+                {
+                    "id": 0,
+                    "name": "Online Assessment",
+                    "__typename": "InterviewStageOption"
+                },
+                {
+                    "id": 1,
+                    "name": "Phone Interview",
+                    "__typename": "InterviewStageOption"
+                },
+                {
+                    "id": 4,
+                    "name": "On Campus Interview",
+                    "__typename": "InterviewStageOption"
+                },
+                {
+                    "id": 2,
+                    "name": "Onsite Interview",
+                    "__typename": "InterviewStageOption"
+                },
+                {
+                    "id": 3,
+                    "name": "Don't know",
+                    "__typename": "InterviewStageOption"
+                }
+            ],
+            "__typename": "InterviewSurveyNode"
+        },
+        "subscribeUrl": null,
+        "isPremium": false,
+        "loginUrl": "/accounts/login/"
+    }
+}
