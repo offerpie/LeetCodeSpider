@@ -8,6 +8,10 @@
 
 当前仅实现Java语言的抓取，如有其它需求，可自行修改源码实现 (文件名 & 注释生成 & 初始默认代码生成)
 
+# 使用说明
+
+修改`LeetCodeSpider/src/main/java/win/techflowing/Config.java`文件，配置相关信息后（可抓包获取），运行`LeetCodeSpider.java`
+
 # 源文件示例
 
 文件名：题目难度_编号_标题
