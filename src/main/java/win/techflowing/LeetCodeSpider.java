@@ -4,12 +4,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import win.techflowing.model.GetAllQuestionResponse;
+import win.techflowing.model.GetAnswerResponse;
 import win.techflowing.model.GetQuestionDetailRequest;
 import win.techflowing.model.GetQuestionDetailResponse;
 import win.techflowing.network.RestClient;
+import win.techflowing.util.SolutionUtil;
 import win.techflowing.util.SourceCodeUtil;
+import win.techflowing.util.URLUtil;
 
 import java.util.List;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * LeetCode题目爬虫
@@ -18,15 +24,23 @@ public class LeetCodeSpider {
 
     /** API成功 */
     private static final int SUCCESS = 200;
-
-    public static void main(String[] args) {
-        new LeetCodeSpider().start();
-    }
+    /** 题目AC */
+    private static final String AC_STATUS = "ac";
+    /** Lock 锁 */
+    private Lock mLock = new ReentrantLock();
+    /** 条件变量 */
+    private Condition mCondition = mLock.newCondition();
+    /** 获取题目失败的次数 */
+    private int mGetQuesionFailedCount = 0;
+    /** 获取AC代码失败的次数 */
+    private int mGetAnswerFailedCount = 0;
+    /** AC代码数 */
+    private int mAnswerCount = 0;
 
     /**
      * 开始
      */
-    private void start() {
+    public void start() {
         System.out.println("开始抓取LeetCode题目");
         getAllQuestion();
     }
@@ -38,7 +52,7 @@ public class LeetCodeSpider {
         RestClient.get().getAPIService().getQuestionList().enqueue(new Callback<GetAllQuestionResponse>() {
             public void onResponse(Call<GetAllQuestionResponse> call, Response<GetAllQuestionResponse> response) {
                 if (response.code() == SUCCESS && response.body() != null) {
-                    getQuestionDetail(response.body().getStatStatusPairs());
+                    getQuestionListSuccess(response.body().getStatStatusPairs());
                 } else {
                     System.out.println("获取题目列表失败" + response.code());
                 }
@@ -53,45 +67,133 @@ public class LeetCodeSpider {
     /**
      * 获取题目详情
      *
+     * @param question 问题
+     */
+    private void getQuestionDetail(final GetAllQuestionResponse.StatStatusPairsBean question) {
+        GetQuestionDetailRequest request = new GetQuestionDetailRequest(question.getStat().getQuestionTitleSlug());
+        RestClient.get().getAPIService().getQuestionDetail(request).enqueue(new Callback<GetQuestionDetailResponse>() {
+            public void onResponse(Call<GetQuestionDetailResponse> call, Response<GetQuestionDetailResponse> response) {
+                if (response.code() == SUCCESS && response.body() != null) {
+                    getQuestionDetailSuccess(question, response.body().getData().getQuestion());
+                } else {
+                    mGetQuesionFailedCount++;
+                    System.out.println("获取题目详情失败" + response.code());
+                    notifyWaitLock();
+                }
+            }
+
+            public void onFailure(Call<GetQuestionDetailResponse> call, Throwable throwable) {
+                mGetQuesionFailedCount++;
+                System.out.println("获取题目详情失败：" + throwable.getMessage());
+                notifyWaitLock();
+            }
+        });
+    }
+
+    /**
+     * 获取AC代码
+     *
+     * @param question       题目概述
+     * @param questionDetail 题目详情
+     */
+    private void getAnswer(GetAllQuestionResponse.StatStatusPairsBean question,
+                           final GetQuestionDetailResponse.DataBean.QuestionBean questionDetail) {
+        String refer = URLUtil.getQuestionDescUrl(question.getStat().getQuestionTitleSlug());
+        String lang = Config.SOURCE_CODE_TYPE.mValue;
+        RestClient.get().getAPIService().getAnswer(refer, lang).enqueue(new Callback<GetAnswerResponse>() {
+            public void onResponse(Call<GetAnswerResponse> call, Response<GetAnswerResponse> response) {
+                if (response.code() == SUCCESS && response.body() != null) {
+                    SolutionUtil.saveSolution(questionDetail, response.body().getCode());
+                } else {
+                    mGetAnswerFailedCount++;
+                    System.out.println("获取AC代码失败" + response.code());
+                }
+                notifyWaitLock();
+            }
+
+            public void onFailure(Call<GetAnswerResponse> call, Throwable throwable) {
+                mGetAnswerFailedCount++;
+                System.out.println("获取AC代码失败：" + throwable.getMessage());
+                notifyWaitLock();
+            }
+        });
+    }
+
+    /**
+     * 获取题目详情成功
+     *
+     * @param question       题目概述
+     * @param questionDetail 题目详情
+     */
+    private void getQuestionDetailSuccess(GetAllQuestionResponse.StatStatusPairsBean question,
+                                          GetQuestionDetailResponse.DataBean.QuestionBean questionDetail) {
+        // 保存为源码文件（不包含答案）
+        SourceCodeUtil.saveQuestion(questionDetail);
+        // 获取题解，保存为markdown
+        if (Config.GET_SOLUTION && AC_STATUS.equals(question.getStatus())) {
+            try {
+                String title = question.getStat().getQuestionTitle();
+                mAnswerCount++;
+                System.out.println("等待抓取 " + title + " 的题解......");
+                Thread.sleep(Config.SPIDER_INTERNAL);
+                System.out.println("开始获取 " + title + " 的题解");
+                getAnswer(question, questionDetail);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            notifyWaitLock();
+        }
+    }
+
+
+    /**
+     * 获取题目详情成功
+     *
      * @param questionList 题目列表
      */
-    private void getQuestionDetail(List<GetAllQuestionResponse.StatStatusPairsBean> questionList) {
+    private void getQuestionListSuccess(List<GetAllQuestionResponse.StatStatusPairsBean> questionList) {
         if (questionList == null) {
             System.out.println("题目列表为空");
             return;
         }
+        System.out.println("题目总数为：" + questionList.size());
         int size = questionList.size();
-        for (int i = 0; i < size; i++) {
+        for (int i = size - 2; i < size; i++) {
             GetAllQuestionResponse.StatStatusPairsBean question = questionList.get(i);
-            GetQuestionDetailRequest request = new GetQuestionDetailRequest(question.getStat().getQuestionTitleSlug());
-            RestClient.get().getAPIService().getQuestionDetail(request).enqueue(new Callback<GetQuestionDetailResponse>() {
-                public void onResponse(Call<GetQuestionDetailResponse> call, Response<GetQuestionDetailResponse> response) {
-                    if (response.code() == SUCCESS && response.body() != null) {
-                        saveQuestion(response.body().getData().getQuestion());
-                    } else {
-                        System.out.println("获取题目详情失败" + response.code());
-                    }
-                }
-
-                public void onFailure(Call<GetQuestionDetailResponse> call, Throwable throwable) {
-                    System.out.println("获取题目详情失败：" + throwable.getMessage());
-                }
-            });
+            String title = question.getStat().getQuestionTitle();
+            System.out.println("开始抓取第 " + (i + 1) + " 项，题目名称：" + title);
+            mLock.lock();
             try {
+                // 获取题目详情，保存为源码文件（不包含答案）
+                getQuestionDetail(question);
+                mCondition.await();
+                System.out.println("等待抓取下一题......");
                 Thread.sleep(Config.SPIDER_INTERNAL);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            } finally {
+                mLock.unlock();
             }
+            System.out.println();
         }
-        System.out.println("抓取题目完成，共计：" + size);
+        System.out.println(">>>>>>全部结束<<<<<<");
+        System.out.println("题目总数：" + size);
+        System.out.println("AC题目总数：" + mAnswerCount);
+        System.out.println("题目获取失败数量：" + mGetQuesionFailedCount);
+        System.out.println("获取AC代码失败数量：" + mGetAnswerFailedCount);
     }
 
+
     /**
-     * 保存文件
-     *
-     * @param question 问题详情
+     * 唤醒等待锁
      */
-    private void saveQuestion(GetQuestionDetailResponse.DataBean.QuestionBean question) {
-        SourceCodeUtil.generateSourceCode(question);
+    private void notifyWaitLock() {
+        mLock.lock();
+        try {
+            mCondition.signal();
+        } finally {
+            mLock.unlock();
+        }
     }
 }

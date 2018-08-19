@@ -1,5 +1,7 @@
 package win.techflowing.util;
 
+import com.sun.javafx.binding.StringFormatter;
+
 /**
  * URL工具类
  */
@@ -20,5 +22,17 @@ public class URLUtil {
             relativeUrl = "/" + relativeUrl;
         }
         return ROOT_URL + relativeUrl;
+    }
+
+    /**
+     * 获取题目的地址
+     *
+     * @param questionSlug 题目名称
+     */
+    public static String getQuestionDescUrl(String questionSlug) {
+        if (questionSlug == null) {
+            return ROOT_URL;
+        }
+        return String.format(ROOT_URL + "/problems/%s/description/", questionSlug);
     }
 }
