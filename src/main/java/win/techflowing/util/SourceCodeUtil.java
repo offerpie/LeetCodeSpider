@@ -2,12 +2,10 @@ package win.techflowing.util;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import win.techflowing.Config;
+import win.techflowing.config.Config;
 import win.techflowing.model.CodeDefinition;
 import win.techflowing.model.GetQuestionDetailResponse;
 import win.techflowing.util.annotation.Annotation;
-import win.techflowing.util.annotation.JavaDoc;
-import win.techflowing.util.code.JavaCode;
 import win.techflowing.util.code.Code;
 import win.techflowing.util.file.FileUtil;
 
@@ -26,7 +24,7 @@ public class SourceCodeUtil {
      * @param question 问题详情
      */
     public static void saveQuestion(GetQuestionDetailResponse.DataBean.QuestionBean question) {
-        Code code = getCode();
+        Code code = Code.getInstance();
         // 文件名称
         String fileName = code.getFileName(question.getQuestionFrontendId(),
                 question.getQuestionTitleSlug(),
@@ -43,7 +41,7 @@ public class SourceCodeUtil {
             return;
         }
         // 写入文件
-        FileUtil.saveSourceFile(fileName + code.getFileNameSuffix(), sourceCode);
+        FileUtil.saveFile(Config.SOURCE_FILE_DIR, fileName + code.getFileNameSuffix(), sourceCode);
         System.out.println("保存题目成功：" + fileName + code.getFileNameSuffix());
     }
 
@@ -58,7 +56,7 @@ public class SourceCodeUtil {
             return null;
         }
         // 注释
-        Annotation annotation = getAnnotation();
+        Annotation annotation = Annotation.getInstance();
         String annotationStr = annotation.generatorAnnotation(question.getQuestionFrontendId(),
                 URLUtil.getAbsoluteUrl(question.getQuestionDetailUrl()),
                 question.getTranslatedTitle(),
@@ -102,31 +100,5 @@ public class SourceCodeUtil {
             }
         }
         return null;
-    }
-
-    /**
-     * 获取{@link Code}实现类
-     */
-    private static Code getCode() {
-        switch (Config.SOURCE_CODE_TYPE) {
-            case JAVA:
-                return new JavaCode();
-            // 其他类型语言暂未实现
-            default:
-                return new JavaCode();
-        }
-    }
-
-    /**
-     * 获取{@link Annotation}实现类
-     */
-    private static Annotation getAnnotation() {
-        switch (Config.SOURCE_CODE_TYPE) {
-            case JAVA:
-                return new JavaDoc();
-            // 其他类型语言暂未实现
-            default:
-                return new JavaDoc();
-        }
     }
 }

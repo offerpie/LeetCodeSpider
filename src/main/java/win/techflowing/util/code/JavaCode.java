@@ -46,4 +46,9 @@ public class JavaCode implements Code {
     public String getFileNameSuffix() {
         return ".java";
     }
+
+    @Override
+    public String getSolutionFileSuffix() {
+        return ".md";
+    }
 }

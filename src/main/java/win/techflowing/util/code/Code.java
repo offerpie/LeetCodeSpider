@@ -1,5 +1,7 @@
 package win.techflowing.util.code;
 
+import win.techflowing.config.Config;
+
 /**
  * 默认代码处理
  */
@@ -24,4 +26,22 @@ public interface Code {
      * 文件后缀
      */
     String getFileNameSuffix();
+
+    /**
+     * 题解文件后缀
+     */
+    String getSolutionFileSuffix();
+
+    /**
+     * 获取Code
+     */
+    static Code getInstance() {
+        switch (Config.SOURCE_CODE_TYPE) {
+            case JAVA:
+                return new JavaCode();
+            // 其他类型语言暂未实现
+            default:
+                return new JavaCode();
+        }
+    }
 }

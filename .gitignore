@@ -93,3 +93,5 @@ buildNumber.properties
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
 
+src/main/java/win/techflowing/config/PrivateConfig.java
+/src/main/resources/solution/

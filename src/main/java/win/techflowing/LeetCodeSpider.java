@@ -3,6 +3,7 @@ package win.techflowing;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import win.techflowing.config.Config;
 import win.techflowing.model.GetAllQuestionResponse;
 import win.techflowing.model.GetAnswerResponse;
 import win.techflowing.model.GetQuestionDetailRequest;
@@ -11,6 +12,7 @@ import win.techflowing.network.RestClient;
 import win.techflowing.util.SolutionUtil;
 import win.techflowing.util.SourceCodeUtil;
 import win.techflowing.util.URLUtil;
+import win.techflowing.util.file.FileUtil;
 
 import java.util.List;
 import java.util.concurrent.locks.Condition;
@@ -34,8 +36,6 @@ public class LeetCodeSpider {
     private int mGetQuesionFailedCount = 0;
     /** 获取AC代码失败的次数 */
     private int mGetAnswerFailedCount = 0;
-    /** AC代码数 */
-    private int mAnswerCount = 0;
 
     /**
      * 开始
@@ -130,11 +130,11 @@ public class LeetCodeSpider {
         // 保存为源码文件（不包含答案）
         SourceCodeUtil.saveQuestion(questionDetail);
         // 获取题解，保存为markdown
-        if (Config.GET_SOLUTION && AC_STATUS.equals(question.getStatus())) {
+        if (Config.GET_SOLUTION && AC_STATUS.equals(question.getStatus())
+                && (Config.COVER_OLD || !FileUtil.isSolutionExist(question))) {
             try {
                 String title = question.getStat().getQuestionTitle();
-                mAnswerCount++;
-                System.out.println("等待抓取 " + title + " 的题解......");
+                System.out.println("等待抓取 " + title + " 的题解...");
                 Thread.sleep(Config.SPIDER_INTERNAL);
                 System.out.println("开始获取 " + title + " 的题解");
                 getAnswer(question, questionDetail);
@@ -159,8 +159,14 @@ public class LeetCodeSpider {
         }
         System.out.println("题目总数为：" + questionList.size());
         int size = questionList.size();
-        for (int i = size - 2; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             GetAllQuestionResponse.StatStatusPairsBean question = questionList.get(i);
+            // 判断是否需要抓取
+            if (!isNeedSpider(question)) {
+                System.out.println("\n不需要抓取：" + question.getStat().getFrontendQuestionId() + "、"
+                        + question.getStat().getQuestionTitle() + "\n");
+                continue;
+            }
             String title = question.getStat().getQuestionTitle();
             System.out.println("开始抓取第 " + (i + 1) + " 项，题目名称：" + title);
             mLock.lock();
@@ -168,7 +174,7 @@ public class LeetCodeSpider {
                 // 获取题目详情，保存为源码文件（不包含答案）
                 getQuestionDetail(question);
                 mCondition.await();
-                System.out.println("等待抓取下一题......");
+                System.out.println("等待抓取下一题...");
                 Thread.sleep(Config.SPIDER_INTERNAL);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -179,11 +185,30 @@ public class LeetCodeSpider {
         }
         System.out.println(">>>>>>全部结束<<<<<<");
         System.out.println("题目总数：" + size);
-        System.out.println("AC题目总数：" + mAnswerCount);
         System.out.println("题目获取失败数量：" + mGetQuesionFailedCount);
         System.out.println("获取AC代码失败数量：" + mGetAnswerFailedCount);
     }
 
+    /**
+     * 是否需要抓取
+     * 不需要：
+     * 有源码文件，有题解
+     * 有源码文件，没AC
+     */
+    private boolean isNeedSpider(GetAllQuestionResponse.StatStatusPairsBean statStatusPairsBean) {
+        if (Config.COVER_OLD) {
+            return true;
+        }
+        if (statStatusPairsBean == null) {
+            return true;
+        }
+        if (FileUtil.isSourceCodeExist(statStatusPairsBean)) {
+            if (FileUtil.isSolutionExist(statStatusPairsBean) || !AC_STATUS.equals(statStatusPairsBean.getStatus())) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     /**
      * 唤醒等待锁

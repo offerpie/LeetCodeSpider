@@ -19,7 +19,7 @@ public interface APIService {
     /**
      * 获取题目列表
      */
-    @GET("api/problems/all")
+    @GET("api/problems/algorithms/")
     Call<GetAllQuestionResponse> getQuestionList();
 
     /**
