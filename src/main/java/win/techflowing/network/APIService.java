@@ -2,6 +2,7 @@ package win.techflowing.network;
 
 import retrofit2.Call;
 import retrofit2.http.*;
+import win.techflowing.config.Config;
 import win.techflowing.model.GetAllQuestionResponse;
 import win.techflowing.model.GetAnswerResponse;
 import win.techflowing.model.GetQuestionDetailRequest;
@@ -31,6 +32,6 @@ public interface APIService {
     /**
      * 获取AC的代码
      */
-    @GET("/submissions/latest/?qid=1")
-    Call<GetAnswerResponse> getAnswer(@Header("referer") String referer, @Query("lang") String lang);
+    @GET("/submissions/latest/")
+    Call<GetAnswerResponse> getAnswer(@Query("qid") long questionId, @Query("lang") String lang);
 }

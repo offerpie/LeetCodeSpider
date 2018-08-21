@@ -98,25 +98,25 @@ public class LeetCodeSpider {
      */
     private void getAnswer(GetAllQuestionResponse.StatStatusPairsBean question,
                            final GetQuestionDetailResponse.DataBean.QuestionBean questionDetail) {
-        String refer = URLUtil.getQuestionDescUrl(question.getStat().getQuestionTitleSlug());
         String lang = Config.SOURCE_CODE_TYPE.mValue;
-        RestClient.get().getAPIService().getAnswer(refer, lang).enqueue(new Callback<GetAnswerResponse>() {
-            public void onResponse(Call<GetAnswerResponse> call, Response<GetAnswerResponse> response) {
-                if (response.code() == SUCCESS && response.body() != null) {
-                    SolutionUtil.saveSolution(questionDetail, response.body().getCode());
-                } else {
-                    mGetAnswerFailedCount++;
-                    System.out.println("获取AC代码失败" + response.code());
-                }
-                notifyWaitLock();
-            }
+        RestClient.get().getAPIService().getAnswer(question.getStat().getQuestionId(), lang)
+                .enqueue(new Callback<GetAnswerResponse>() {
+                    public void onResponse(Call<GetAnswerResponse> call, Response<GetAnswerResponse> response) {
+                        if (response.code() == SUCCESS && response.body() != null) {
+                            SolutionUtil.saveSolution(questionDetail, response.body().getCode());
+                        } else {
+                            mGetAnswerFailedCount++;
+                            System.out.println("获取AC代码失败" + response.code());
+                        }
+                        notifyWaitLock();
+                    }
 
-            public void onFailure(Call<GetAnswerResponse> call, Throwable throwable) {
-                mGetAnswerFailedCount++;
-                System.out.println("获取AC代码失败：" + throwable.getMessage());
-                notifyWaitLock();
-            }
-        });
+                    public void onFailure(Call<GetAnswerResponse> call, Throwable throwable) {
+                        mGetAnswerFailedCount++;
+                        System.out.println("获取AC代码失败：" + throwable.getMessage());
+                        notifyWaitLock();
+                    }
+                });
     }
 
     /**
